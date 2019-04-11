@@ -4,37 +4,48 @@ class DiceGame
   round = 0
   sets = [0, 0]
 
-  def self.dice_roll
-    rand(6)
+  def self.roll_dice
+    rand(6) + rand(6)
   end
+
+  def self.winner(score_one, score_two)
+    if score_one > score_two
+      -1
+    elsif score_one == score_two
+      0
+    elsif score_one < score_two
+      1
+    end
+  end
+
+  puts "  Player One       Rounds        Player Two"
+  puts "-----------------------------------------------"
 
   while winner == false
     round += 1
-    playerOne = dice_roll + dice_roll
-    playerTwo = dice_roll + dice_roll
-  
-    puts playerOne
-    puts playerTwo
+    playerOne = roll_dice
+    playerTwo = roll_dice
 
-    if playerOne > playerTwo
+    case winner(playerOne, playerTwo)
+    when -1
+      puts "    Winner!  : (#{playerOne}) Round #{round} (#{playerTwo}) :         "
       sets[0] += 1
-      puts "Round #{round}: One winner!"
-    elsif playerTwo > playerOne
+    when 0
+      puts "    Draw!    : (#{playerOne}) Round #{round} (#{playerTwo}) :  Draw!  "
+      
+    when 1
+      puts "             : (#{playerOne}) Round #{round} (#{playerTwo}) :  Winner!"
       sets[1] += 1
-      puts "Round #{round}: Two Tower!"
-    elsif
-      playerOne == playerTwo
-      puts "Round: One == Two: draw!"
     end
 
     if sets[0] == 3
       winner = true
-      puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      puts "Champion: One winner!"
+      puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      puts "        Champion: One winner!"
     elsif sets[1] == 3
       winner = true
-      puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxx"
-      puts "Champion: Two Tower!"
+      puts "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+      puts "        Champion: Two Tower!"
     end
   end
 end
